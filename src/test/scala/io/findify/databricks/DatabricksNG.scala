@@ -14,11 +14,11 @@ object DatabricksNGTest {
     val databricks = new Databricks(auth)
 
     val myLibraries = Some(List(
-      Library(jar = Some("dbfs:/FileStore/job-jars/"))
+      Library(jar = Some("dbfs:/FileStore/jars/53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"))
     ))
 
     val mySparkJarTask = Some(JarTask(
-      jar_uri = Some("jog-manager"),
+      jar_uri = Some("53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"),
       main_class_name = "com.example.Main"
     ))
 
@@ -38,5 +38,6 @@ object DatabricksNGTest {
 
     val jobs = new Jobs(auth, client)
     jobs.create(new_job)
+
   }
 }
