@@ -1,8 +1,11 @@
 package io.findify.databricks
 
 import io.findify.databricks.api._
-import io.findify.databricks.calls.{Jobs}
+import io.findify.databricks.calls.{Jobs, Runs}
 import org.asynchttpclient.{DefaultAsyncHttpClient, DefaultAsyncHttpClientConfig}
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 object DatabricksNGTest {
   def main(args: Array[String]): Unit = {
@@ -17,27 +20,27 @@ object DatabricksNGTest {
       Library(jar = Some("dbfs:/FileStore/jars/53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"))
     ))
 
-    val mySparkJarTask = Some(JarTask(
-      jar_uri = Some("53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"),
-      main_class_name = "com.example.Main"
+    val mySparkJarTask = Some(SparkJarTask(
+      jar_uri = Some("dbfs:/FileStore/jars/53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"),
+      main_class_name = Some("com.example.Main")
     ))
 
     val myExistingCluster = Some("1109-190151-surer305")
 
     val myEmailNotifications = Notifications(Some(List("bgxavier@gmail.com")))
 
-    val new_job = Job(
-      "teste",
-      existing_cluster_id=myExistingCluster,
-      libraries = myLibraries,
+    val mySubmit = Submit(
+      run_name=Some("teste"),
+      existing_cluster_id = myExistingCluster,
       spark_jar_task = mySparkJarTask,
-      email_notifications = myEmailNotifications
+      libraries = myLibraries
     )
 
     val client = new DefaultAsyncHttpClient(new DefaultAsyncHttpClientConfig.Builder().setCompressionEnforced(true).setKeepAlive(true).build())
 
-    val jobs = new Jobs(auth, client)
-    jobs.create(new_job)
-
+    val runs = new Runs(auth, client)
+    val myRun = runs.submit(mySubmit)
+    val myWait = Await.result(myRun,Duration.Inf)
+    println(myWait)
   }
 }
