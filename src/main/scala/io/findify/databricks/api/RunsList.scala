@@ -19,7 +19,10 @@ case class RunsListEntry(job_id: Long,
                          setup_duration: Option[Long],
                          execution_duration: Option[Long],
                          cleanup_duration: Option[Long],
-                         trigger: Option[String]
+                         trigger: Option[String],
+                         run_name: Option[String],
+                         run_page_url: Option[String],
+                         run_type: Option[String]
 )
 
 case class RunState(life_cycle_state: Option[String], result_state: Option[String], state_message: Option[String])
@@ -39,9 +42,4 @@ case class ClusterSpec(existing_cluster_id: Option[String] = None, new_cluster: 
 case class ClusterInstance(cluster_id: String, spark_context_id: String)
 
 case class RunParameters(jar_params: Option[List[String]] = None, notebook_params: Option[List[(String, String)]] = None, python_params: Option[List[String]] = None, spark_submit_params: Option[List[String]] = None)
-
-object RunResultState extends Enumeration {
-  val SUCCESS, FAILED, TIMEDOUT, CANCELED	= Value
-}
-
 
