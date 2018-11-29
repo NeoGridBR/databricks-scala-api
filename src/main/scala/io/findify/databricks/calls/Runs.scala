@@ -18,6 +18,6 @@ class Runs(auth: Auth, client: AsyncHttpClient) extends ApiCall(s"https://${auth
   def submit(submit: Submit) =
     postJson("submit", writePretty(submit)).map(readjson[SubmitResponse])
 
-  //def get(id:Int) = getJson("get", Map("job_id" -> id.toString)).map(readjson[JobWithId])
+  def get(id:Int) = getJson("get", Map("run_id" -> id.toString)).map(readjson[RunsEntry])
 }
 
