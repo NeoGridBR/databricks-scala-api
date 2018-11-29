@@ -1,29 +1,28 @@
 package io.findify.databricks.api
 
 
+case class RunsList(runs: List[RunsEntry], has_more: Boolean)
 
-case class RunsList(runs: List[RunsListEntry], has_more: Boolean)
-
-case class RunsListEntry(job_id: Long,
-                         run_id: Long,
-                         creator_user_name: Option[String],
-                         number_in_job: Long,
-                         original_attempt_run_id: Option[Long],
-                         state: Option[RunState] = None,
-                         schedule: Option[CronSchedule] = None,
-                         task: JobTask,
-                         cluster_spec: Option[ClusterSpec] = None,
-                         cluster_instance: Option[ClusterInstance] = None,
-                         overriding_parameters: Option[RunParameters] = None,
-                         start_time: Option[Long],
-                         setup_duration: Option[Long],
-                         execution_duration: Option[Long],
-                         cleanup_duration: Option[Long],
-                         trigger: Option[String],
-                         run_name: Option[String],
-                         run_page_url: Option[String],
-                         run_type: Option[String]
-)
+case class RunsEntry(job_id: Long,
+                     run_id: Long,
+                     creator_user_name: Option[String],
+                     number_in_job: Long,
+                     original_attempt_run_id: Option[Long],
+                     state: Option[RunState] = None,
+                     schedule: Option[CronSchedule] = None,
+                     task: JobTask,
+                     cluster_spec: Option[ClusterSpec] = None,
+                     cluster_instance: Option[ClusterInstance] = None,
+                     overriding_parameters: Option[RunParameters] = None,
+                     start_time: Option[Long],
+                     setup_duration: Option[Long],
+                     execution_duration: Option[Long],
+                     cleanup_duration: Option[Long],
+                     trigger: Option[String],
+                     run_name: Option[String],
+                     run_page_url: Option[String],
+                     run_type: Option[String]
+                    )
 
 case class RunState(life_cycle_state: Option[String], result_state: Option[String], state_message: Option[String])
 
