@@ -7,7 +7,7 @@ import org.asynchttpclient.{DefaultAsyncHttpClient, DefaultAsyncHttpClientConfig
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-object DatabricksNGTest {
+object DatabricksRuns {
   def main(args: Array[String]): Unit = {
     val username = "token"
     val password = "dapiba8fbc63008ec2f87c2f03c33269a4b6"
@@ -17,17 +17,27 @@ object DatabricksNGTest {
     val databricks = new Databricks(auth)
 
     val myLibraries = Some(List(
-      Library(jar = Some("dbfs:/FileStore/jars/53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"))
+      Library(jar = Some(s"dbfs:/FileStore/jars/job-manager-3.5-DATABRICKS-SNAPSHOT.jar")),
+      Library(jar = Some(s"dbfs:/FileStore/jars/retail-transformations-1.0.jar"))
+    ))
+
+    val myParameters = Some(List(
+      "20180808113910024aesportiva2lr6f4c895638c01def9a5",
+      "aesportiva",
+      "1533728350023",
+      "true",
+      "false"
     ))
 
     val mySparkJarTask = Some(SparkJarTask(
-      jar_uri = Some("dbfs:/FileStore/jars/53103934_a7f2_47ec_918e_5d2eb7b60cad-job_manager_3_0-1f476.jar"),
-      main_class_name = Some("com.example.Main")
+      main_class_name = Some(s"com.neogrid.atena.jobmanager.StartJobManager"),
+      parameters = myParameters
     ))
 
-    val myExistingCluster = Some("1109-190151-surer305")
+    val myExistingCluster = Some(s"1130-134746-leapt425")
 
-    val myEmailNotifications = Notifications(Some(List("bgxavier@gmail.com")))
+    val myEmailNotifications = Notifications(Some(List(s"bgxavier@gmail.com")))
+
 
     val mySubmit = Submit(
       run_name=Some("teste"),
@@ -40,6 +50,7 @@ object DatabricksNGTest {
 
     val runs = new Runs(auth, client)
     val myRun = runs.submit(mySubmit)
+
     val myWait = Await.result(myRun,Duration.Inf)
     println(myWait)
   }
