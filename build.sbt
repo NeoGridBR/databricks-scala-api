@@ -1,6 +1,6 @@
 name := "databricks-scala-api"
-
-version := "0.3.1"
+organization := "io.findify"
+version := "0.3.2-NG"
 
 crossScalaVersions := Seq("2.10.6", "2.11.8")
 
@@ -17,8 +17,5 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-java8-compat" % "0.5.0"
 )
 
-organization := "io.findify"
 
 licenses += ("MIT", url("https://opensource.org/licenses/MIT"))
-
-bintrayOrganization := Some("findify")
