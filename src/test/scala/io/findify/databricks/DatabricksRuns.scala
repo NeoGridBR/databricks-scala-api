@@ -10,20 +10,26 @@ import scala.concurrent.duration.Duration
 object DatabricksRuns {
   def main(args: Array[String]): Unit = {
     val username = "token"
-    val password = "dapiba8fbc63008ec2f87c2f03c33269a4b6"
+    val password = ""
     val endpoint = "eastus2.azuredatabricks.net"
 
     val auth: Auth = Auth(endpoint, username, password)
     val databricks = new Databricks(auth)
 
     val myLibraries = Some(List(
-      Library(jar = Some(s"dbfs:/FileStore/jars/job-manager-3.5-DATABRICKS-SNAPSHOT.jar")),
-      Library(jar = Some(s"dbfs:/FileStore/jars/retail-transformations-1.0.jar"))
+      Library(jar = Some(s"dbfs:/FileStore/jars/job-manager-3.6-SNAPSHOT.jar")),
+      Library(jar = Some(s"dbfs:/FileStore/jars/retail-transformations-1.1-SNAPSHOT.jar"))
     ))
 
+    // walgreens
+    // 20181226124315114walgreens8lxae19ccfd0fb959930a31
+
+    // aesportiva
+    // "20180808113910024aesportiva2lr6f4c895638c01def9a5
+
     val myParameters = Some(List(
-      "20180808113910024aesportiva2lr6f4c895638c01def9a5",
-      "aesportiva",
+      "20181226124315114walgreens8lxae19ccfd0fb959930a31",
+      "walgreens",
       "1533728350023",
       "true",
       "false"
